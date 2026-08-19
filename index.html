@@ -680,14 +680,32 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 }
 .contents_div .bnf-hero__arrow{
   animation:bnf-hero-arrow-out 4.2s ease-in-out infinite;
+  will-change:opacity;           /* 레이어를 고정해 마스크 재합성 깜빡임을 막는다 */
 }
 .contents_div .bnf-hero__glow{
   animation:bnf-hero-pop 4.2s cubic-bezier(.3,.8,.3,1) infinite;
 }
 
+/* 화면에 들어오기 전에는 0% 프레임에 세워 둔다.
+   .bnf-anim 은 JS 가 살아 있을 때만 붙으므로, JS 가 없으면 그냥 재생된다.
+   네 개를 한 번에 풀어주기 때문에 시작 시각이 완전히 같아진다
+   = 화살표/글로우가 서로 어긋나며 생기던 깜빡임이 사라진다. */
+.contents_div.bnf-anim .bnf-hero__trace,
+.contents_div.bnf-anim .bnf-hero__arrow,
+.contents_div.bnf-anim .bnf-hero__glow,
+.contents_div.bnf-anim .bnf-hero__cal{animation-play-state:paused}
+
+.contents_div.bnf-anim .bnf-hero.is-playing .bnf-hero__trace,
+.contents_div.bnf-anim .bnf-hero.is-playing .bnf-hero__arrow,
+.contents_div.bnf-anim .bnf-hero.is-playing .bnf-hero__glow,
+.contents_div.bnf-anim .bnf-hero.is-playing .bnf-hero__cal{animation-play-state:running}
+
 @keyframes bnf-hero-draw{      /* 0.25s 숨고른 뒤 1.7s 동안 주르륵 */
-  0%,6%    {stroke-dashoffset:2700}
-  46%,100% {stroke-dashoffset:0}
+  0%,6%      {stroke-dashoffset:2700}
+  46%,92%    {stroke-dashoffset:0}
+  /* 되감기는 화살표가 완전히 투명해진(88.5%) 뒤에 몰래 해치운다.
+     한 바퀴 이음매에서 '다 그려진 화살표'가 한 프레임 번쩍이던 원인. */
+  92.01%,100%{stroke-dashoffset:2700}
 }
 @keyframes bnf-hero-arrow-out{ /* 한 바퀴 끝에서 조용히 사라진다 */
   0%,79.2% {opacity:1}
@@ -1020,6 +1038,58 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     pending.forEach(function(el){ io.observe(el); });
   } else {
     root.classList.remove('bnf-anim');
+  }
+
+  /* ── 히어로 : 화면에 들어왔을 때 비로소 출발시킨다 ──────────────
+     임베드되는 상세페이지라 히어로가 화면 맨 위에 바로 뜨지 않는다.
+     로딩 직후부터 혼자 돌면 스크롤해 내려왔을 때 이미 한참 지나
+     있으므로, 눈에 보이는 순간에 0% 부터 재생한다.
+     이미지가 다 준비된 뒤 출발시켜 첫 바퀴가 튀지 않게 한다. */
+  var hero = root.querySelector('.bnf-hero');
+
+  if(hero && root.classList.contains('bnf-anim')){
+    var play  = function(){ hero.classList.add('is-playing'); };
+    var pause = function(){ hero.classList.remove('is-playing'); };
+
+    var whenReady = function(scope, done){
+      var imgs = [].slice.call(scope.querySelectorAll('img'));
+
+      /* SVG 안의 <image> 는 load 이벤트를 믿기 어려워 같은 주소를 한 번 더
+         요청해 둔다. 실제로는 캐시에서 즉시 돌아온다. */
+      [].slice.call(scope.querySelectorAll('image')).forEach(function(node){
+        var href = node.getAttribute('href') || node.getAttribute('xlink:href');
+        if(href){ var probe = new Image(); probe.src = href; imgs.push(probe); }
+      });
+
+      var left = imgs.length, fired = false;
+      var fire = function(){ if(!fired){ fired = true; done(); } };
+      if(!left){ fire(); return; }
+
+      var tick = function(){ if(--left <= 0) fire(); };
+      imgs.forEach(function(img){
+        if(img.complete){ tick(); return; }
+        img.addEventListener('load',  tick, {once:true});
+        img.addEventListener('error', tick, {once:true});
+      });
+      setTimeout(fire, 2500);   /* 아무리 늦어도 2.5초 뒤엔 출발 */
+    };
+
+    if('IntersectionObserver' in window){
+      var heroStarted = false;
+      var heroIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){
+            if(heroStarted){ play(); }                 /* 다시 보이면 이어서 */
+            else { heroStarted = true; whenReady(hero, play); }
+          } else if(heroStarted){
+            pause();                                   /* 안 보이는 동안은 쉰다 */
+          }
+        });
+      }, { threshold:0.3 });
+      heroIO.observe(hero);
+    } else {
+      play();
+    }
   }
 
   var today = new Date(); today.setHours(0,0,0,0);
