@@ -212,15 +212,18 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-intro::after{display:none}
 .contents_div .bnf-toc{margin-top:0}
 .contents_div .bnf-toc ul{display:grid;grid-template-columns:repeat(4,1fr);gap:7px}
+/* 캡슐 테두리 : 포인트 박스(.bnf-point)와 같은 규칙 —
+   각 배경색보다 한 단계 진한 1px 라인. 테두리 2px 만큼 패딩을 덜어
+   캡슐 높이는 기존과 동일하게 유지한다. */
 .contents_div .bnf-toc a{
-  display:block;padding:6.5px 6px;border-radius:99px;text-align:center;
+  display:block;padding:5.5px 5px;border-radius:99px;text-align:center;
   font-size:13px;font-weight:700;letter-spacing:-.03em;line-height:1;
-  background:var(--bnf-violet-soft);color:#6D28D9;white-space:nowrap;
-  transition:background-color .15s ease,color .15s ease;
+  background:var(--bnf-violet-soft);border:1px solid #E3D4FD;color:#6D28D9;white-space:nowrap;
+  transition:background-color .15s ease,border-color .15s ease,color .15s ease;
 }
-.contents_div .bnf-toc a.is-youth{background:var(--bnf-pink-soft);color:#F84BC9}
-.contents_div .bnf-toc a.is-biz{background:var(--bnf-blue-soft);color:var(--bnf-blue)}
-.contents_div .bnf-toc a.is-etc{background:var(--bnf-indigo-soft);color:var(--bnf-indigo)}
+.contents_div .bnf-toc a.is-youth{background:var(--bnf-pink-soft);border-color:#FBD3EA;color:#F84BC9}
+.contents_div .bnf-toc a.is-biz{background:var(--bnf-blue-soft);border-color:#CFE4FF;color:var(--bnf-blue)}
+.contents_div .bnf-toc a.is-etc{background:var(--bnf-indigo-soft);border-color:#D8D9FF;color:var(--bnf-indigo)}
 /* 목차 라벨 — 모바일은 축약형, 웹은 전체 표기 */
 .contents_div .bnf-toc a .bnf-nav-web{display:none}
 
@@ -310,7 +313,8 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   font-size:14px;
   font-size:clamp(13px, 3.7333cqw, 15px);
 }
-.contents_div .bnf-card dd em{font-style:normal;font-weight:700;color:var(--bnf-pink)}
+/* dd 안 강조 — 색을 따로 주지 않고 본문색 그대로, 굵기(400→700)로만 구분한다 */
+.contents_div .bnf-card dd em{font-style:normal;font-weight:700;color:inherit}
 /* dd 목록 마커 — 체크 아이콘
    list-style 은 상위 사이트 CSS가 눌러 버릴 수 있어 쓰지 않는다.
    li 를 flex 로 만들고 ::before 배경에 인라인 SVG 를 깐다.
@@ -415,10 +419,11 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
    터치 피드백은 :active 로 따로 준다.
    ──────────────────────────────────────────────────────── */
 @media (hover:hover) and (pointer:fine){
-  .contents_div .bnf-toc a:hover{background:var(--bnf-violet-deep);color:#fff}
-  .contents_div .bnf-toc a.is-youth:hover{background:#F84BC9;color:#fff}
-  .contents_div .bnf-toc a.is-biz:hover{background:var(--bnf-blue);color:#fff}
-  .contents_div .bnf-toc a.is-etc:hover{background:var(--bnf-indigo);color:#fff}
+  /* 채워질 때는 테두리도 같은 색으로 덮어 링이 겉돌지 않게 한다 */
+  .contents_div .bnf-toc a:hover{background:var(--bnf-violet-deep);border-color:var(--bnf-violet-deep);color:#fff}
+  .contents_div .bnf-toc a.is-youth:hover{background:#F84BC9;border-color:#F84BC9;color:#fff}
+  .contents_div .bnf-toc a.is-biz:hover{background:var(--bnf-blue);border-color:var(--bnf-blue);color:#fff}
+  .contents_div .bnf-toc a.is-etc:hover{background:var(--bnf-indigo);border-color:var(--bnf-indigo);color:#fff}
 
   .contents_div .bnf-tel:hover{color:var(--bnf-pink);border-bottom-color:var(--bnf-pink)}
   .contents_div .bnf-applink:hover{color:var(--bnf-pink);border-bottom-color:var(--bnf-pink)}
@@ -432,10 +437,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 }
 
 /* 터치 기기 : 누르는 동안만 반응 */
-.contents_div .bnf-toc a:active{background:var(--bnf-violet-deep);color:#fff}
-.contents_div .bnf-toc a.is-youth:active{background:#F84BC9;color:#fff}
-.contents_div .bnf-toc a.is-biz:active{background:var(--bnf-blue);color:#fff}
-.contents_div .bnf-toc a.is-etc:active{background:var(--bnf-indigo);color:#fff}
+.contents_div .bnf-toc a:active{background:var(--bnf-violet-deep);border-color:var(--bnf-violet-deep);color:#fff}
+.contents_div .bnf-toc a.is-youth:active{background:#F84BC9;border-color:#F84BC9;color:#fff}
+.contents_div .bnf-toc a.is-biz:active{background:var(--bnf-blue);border-color:var(--bnf-blue);color:#fff}
+.contents_div .bnf-toc a.is-etc:active{background:var(--bnf-indigo);border-color:var(--bnf-indigo);color:#fff}
 .contents_div .bnf-btn:active{background:#000}
 .contents_div .bnf-btn.is-line:active{background:var(--bnf-ink);color:#fff}
 .contents_div .bnf-btn.is-line:active span{color:#B9B9C0}
@@ -503,7 +508,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   /* 분야 내비 = 4열 한 줄. 제목 없이 얇은 카드로 둔다 */
   .contents_div .bnf-toc{display:block;padding:20px 24px;margin-top:16px}
   .contents_div .bnf-toc ul{display:grid;grid-template-columns:repeat(4,1fr);gap:10px}
-  .contents_div .bnf-toc a{padding:11.5px 10px;font-size:15px}
+  .contents_div .bnf-toc a{padding:10.5px 9px;font-size:15px}   /* 테두리 1px 만큼 차감 */
   .contents_div .bnf-toc a .bnf-nav-mo{display:none}
   .contents_div .bnf-toc a .bnf-nav-web{display:inline}
 
@@ -614,7 +619,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 }
 @container bnfroot (max-width:380px){
   .contents_div .bnf-toc ul{gap:6px}
-  .contents_div .bnf-toc a{padding:5.5px 4px;font-size:12px}
+  .contents_div .bnf-toc a{padding:4.5px 3px;font-size:12px}    /* 테두리 1px 만큼 차감 */
 }
 
 /* @container 미지원 브라우저 폴백 — 창 폭 기준으로 웹 레이아웃만 보정 */
@@ -647,11 +652,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   .contents_div.bnf-anim .bnf-tags{opacity:1;transform:none}
 }
 
-/* ── 히어로 : 레이어 분리 + 화살표 드로잉 애니메이션 ───────────
-   쌓이는 순서(아래→위) : 배경 → 화살표 → 글로우 → 텍스트
-   배경·텍스트는 그냥 보이고, 화살표만 꼬리에서 화살촉 쪽으로
-   훑어 그려진 뒤 마지막에 글로우가 뿅 뜬다. 전체가 무한 반복.
-   ───────────────────────────────────────────────────────── */
+/* ── 히어로 : 레이어 분리 + 화살표 드로잉 애니메이션 ── */
 .contents_div .bnf-hero__stage{
   position:relative;width:100%;
   aspect-ratio:1600 / 1520;      /* 레이어 4장 모두 1600×1520 */
