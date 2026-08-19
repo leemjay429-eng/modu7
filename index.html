@@ -133,6 +133,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   --bnf-violet-deep:#6D28D9;  --bnf-violet-dark:#4E239E;
   --bnf-pink-deep:#c11582;  --bnf-pink-dark:#b61e7e;
   --bnf-violet-gray:#6B5F8F;   /* 인트로 리드문 — 보라 기운 도는 본문 회색 */
+  /* 푸터 해시태그 — 지면 마감용이라 존재감을 낮춘다.
+     인디고 색상(H≈245)만 남기고 채도를 100%→14%로 떨어뜨렸다 */
+  --bnf-tag-ink:#8E8BA8;       /* was var(--bnf-indigo) #5D61FF */
+  --bnf-tag-line:#DEDDE8;      /* was #D8D9FF */
   --bnf-sans:"Pretendard Variable",Pretendard,-apple-system,BlinkMacSystemFont,system-ui,"Malgun Gothic",sans-serif;
   --bnf-head:'Isamanru',var(--bnf-sans);
   --bnf-gap:70px;
@@ -227,11 +231,13 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-card{--bnf-theme:var(--bnf-violet);--bnf-theme-hl:#E6D8FF}
 .contents_div .bnf-card.is-youth{--bnf-theme:#F84BC9;--bnf-theme-hl:#FFD6EF}
 .contents_div .bnf-card.is-biz{--bnf-theme:var(--bnf-blue);--bnf-theme-hl:#D3E8FF}
+.contents_div .bnf-card.is-farm{--bnf-theme:var(--bnf-blue);--bnf-theme-hl:#D3E8FF}
 .contents_div .bnf-card.is-etc{--bnf-theme:var(--bnf-indigo);--bnf-theme-hl:#DCDDFF}
 .contents_div .bnf-card__meta{display:flex;align-items:center;gap:7px;margin-bottom:12px;flex-wrap:wrap}
 .contents_div .bnf-chip{font-size:12px;font-weight:700;padding:5px 10px;border-radius:6px;background:var(--bnf-violet-soft);color:#6D28D9}
 .contents_div .bnf-chip.is-youth{background:var(--bnf-pink-soft);color:#F84BC9}
 .contents_div .bnf-chip.is-biz{background:var(--bnf-blue-soft);color:var(--bnf-blue)}
+.contents_div .bnf-chip.is-farm{background:var(--bnf-blue-soft);color:var(--bnf-blue)}
 .contents_div .bnf-chip.is-etc{background:var(--bnf-indigo-soft);color:var(--bnf-indigo)}
 .contents_div .bnf-dday{font-size:12px;font-weight:700;padding:5px 10px;border-radius:6px;background:var(--bnf-ink);color:#fff}
 .contents_div .bnf-dday.is-off{background:#EFEFF2;color:var(--bnf-gray)}
@@ -280,6 +286,9 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-point.is-biz{background:var(--bnf-blue-soft);border-color:#CFE4FF}
 .contents_div .bnf-point.is-biz b{color:var(--bnf-blue)}
 .contents_div .bnf-point.is-biz span{color:var(--bnf-blue)}
+.contents_div .bnf-point.is-farm{background:var(--bnf-blue-soft);border-color:#CFE4FF}
+.contents_div .bnf-point.is-farm b{color:var(--bnf-blue)}
+.contents_div .bnf-point.is-farm span{color:var(--bnf-blue)}
 .contents_div .bnf-point.is-etc{background:var(--bnf-indigo-soft);border-color:#D8D9FF}
 .contents_div .bnf-point.is-etc b{color:var(--bnf-indigo)}
 .contents_div .bnf-point.is-etc span{color:var(--bnf-indigo)}
@@ -319,7 +328,8 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-card.is-youth dd li::before{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%23F84BC9' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.2 8.6l3.4 3.4L12.8 4.6'/%3E%3C/svg%3E");
 }
-.contents_div .bnf-card.is-biz dd li::before{
+.contents_div .bnf-card.is-biz dd li::before,
+.contents_div .bnf-card.is-farm dd li::before{
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 16 16' fill='none' stroke='%234BA6F8' stroke-width='2.4' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M3.2 8.6l3.4 3.4L12.8 4.6'/%3E%3C/svg%3E");
 }
 .contents_div .bnf-card.is-etc dd li::before{
@@ -395,7 +405,8 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-tags ul{display:flex;flex-wrap:wrap;justify-content:center;gap:6px}
 .contents_div .bnf-tags li{
   font-size:12.5px;font-weight:400;letter-spacing:-.02em;line-height:1;
-  padding:7px 11px;border-radius:99px;background:#fff;border:1px solid #D8D9FF;color:var(--bnf-indigo);
+  padding:7px 11px;border-radius:99px;background:#fff;
+  border:1px solid var(--bnf-tag-line);color:var(--bnf-tag-ink);
 }
 
 /* ── 상태 ─────────────────────────────────────────────────
@@ -734,7 +745,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 <script>
 (function(){
   /* 아래 콘텐츠가 그려지기 전에 붙어야 첫 프레임 깜빡임이 없다 */
-  var root = document.currentScript && document.currentScript.parentNode;
+  var root = document.currentScript && document.currentScript.closest('.contents_div');
   if(root && root.classList && 'IntersectionObserver' in window){
     root.classList.add('bnf-anim');
   }
@@ -941,11 +952,11 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   </article>
 
   <!-- 8 -->
-  <article class="bnf-card" id="bnf-b9">
-    <img class="bnf-card__ico" src="img/유기농.webp" alt="2026년 전남광주통합특별시 유기농 명인 후보자 추천 안내 이미지" loading="lazy" decoding="async"><div class="bnf-card__meta"><span class="bnf-chip">일반시민</span><span class="bnf-dday" data-end="2026-09-02">마감 D-15</span></div>
+  <article class="bnf-card is-farm" id="bnf-b9">
+    <img class="bnf-card__ico" src="img/유기농.webp" alt="2026년 전남광주통합특별시 유기농 명인 후보자 추천 안내 이미지" loading="lazy" decoding="async"><div class="bnf-card__meta"><span class="bnf-chip is-farm">농업인</span><span class="bnf-dday" data-end="2026-09-02">마감 D-15</span></div>
     <h2>독창적 유기농업 기술을 보유한<br><strong>유기농 명인</strong>을 찾습니다</h2>
     <p class="bnf-lede">유기농업에 기여한 농업인을 발굴해 <b class="bnf-hl">‘2026년 전남광주통합특별시 유기농 명인’</b>으로 지정하기 위한 후보자를 추천받습니다. 전남광주통합특별시의 비옥한 땅에서 유기농 외길을 걸어온 숨은 농업인을 알고 있거나, 자진추천하고 싶은 농업인이 있다면 도전하세요!</p>
-    <div class="bnf-point"><b>유기농 명인 지정</b><span>공고번호 2026-1210</span></div>
+    <div class="bnf-point is-farm"><b>유기농 명인 지정</b><span>공고번호 2026-1210</span></div>
     <dl>
       <div><dt>모집 기간</dt><dd>2026. 9. 2.(수)까지</dd></div>
     </dl>
