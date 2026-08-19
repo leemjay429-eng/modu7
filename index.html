@@ -389,7 +389,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   transition:background-color .18s ease,color .18s ease;
 }
 /* 화살표 = 텍스트와 같은 행의 flex 아이템. 평소엔 폭 0으로 접혀 있다 */
-.contents_div .bnf-btn:not(.is-app)::after{
+.contents_div .bnf-btn:not(.is-app):not(.is-sub)::after{
   content:"→";flex:none;font-size:15px;line-height:1;font-weight:700;
   width:0;opacity:0;margin-left:-8px;      /* 부모 gap 8px 상쇄 */
   transform:translateX(-4px);overflow:hidden;pointer-events:none;
@@ -399,6 +399,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .bnf-btn.is-app{flex-direction:column;gap:2px;padding:8px 12px;line-height:1.2}
 .contents_div .bnf-btn.is-app span{font-size:11.5px;font-weight:500;color:var(--bnf-gray);letter-spacing:-.02em;text-align:center}
 .contents_div .bnf-btn.is-app:not(.is-line) span{color:#B9B9C0}
+/* 버튼 아래 보조 정보(공고번호 등) 한 줄 */
+.contents_div .bnf-btn.is-sub{flex-direction:column;gap:2px;padding:12px 15px;line-height:1.25}
+.contents_div .bnf-btn.is-sub span{font-size:12px;font-weight:500;letter-spacing:-.02em;color:#B9B9C0}
+.contents_div .bnf-btn.is-sub.is-line span{color:var(--bnf-gray)}
 .contents_div .bnf-card > .bnf-btn + .bnf-btn,
 .contents_div .bnf-card > .bnf-btn + .bnf-btnrow{margin-top:8px}
 .contents_div .bnf-card > dl + .bnf-btnrow{margin-top:22px}
@@ -431,7 +435,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   /* 호버 : 흐려지는 게 아니라 진해진다 */
   .contents_div .bnf-btn:hover{background:#000}
   /* 화살표가 텍스트 오른쪽으로 펼쳐진다 */
-  .contents_div .bnf-btn:not(.is-app):hover::after{width:1em;opacity:1;margin-left:0;transform:translateX(0)}
+  .contents_div .bnf-btn:not(.is-app):not(.is-sub):hover::after{width:1em;opacity:1;margin-left:0;transform:translateX(0)}
   .contents_div .bnf-btn.is-line:hover{background:var(--bnf-ink);color:#fff}
   .contents_div .bnf-btn.is-line:hover span{color:#B9B9C0}
 }
@@ -564,6 +568,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 
   /* 버튼 폭 제한 */
   .contents_div .bnf-btn{margin-top:28px;max-width:420px;margin-left:auto;margin-right:auto}
+  .contents_div .bnf-btn.is-sub span{font-size:13px}
   .contents_div .bnf-btnrow{max-width:420px;margin-left:auto;margin-right:auto;gap:10px}
   .contents_div .bnf-btnrow .bnf-btn{max-width:none;margin-left:0;margin-right:0}
 
@@ -957,11 +962,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     <img class="bnf-card__ico" src="img/유기농.webp" alt="2026년 전남광주통합특별시 유기농 명인 후보자 추천 안내 이미지" loading="lazy" decoding="async"><div class="bnf-card__meta"><span class="bnf-chip is-farm">농업인</span><span class="bnf-dday" data-end="2026-09-02">마감 D-15</span></div>
     <h2>독창적 유기농업 기술을 보유한<br><strong>유기농 명인</strong>을 찾습니다</h2>
     <p class="bnf-lede">유기농업에 기여한 농업인을 발굴해 <b class="bnf-hl">‘2026년 전남광주통합특별시 유기농 명인’</b>으로 지정하기 위한 후보자를 추천받습니다. 전남광주통합특별시의 비옥한 땅에서 유기농 외길을 걸어온 숨은 농업인을 알고 있거나, 자진추천하고 싶은 농업인이 있다면 도전하세요!</p>
-    <div class="bnf-point is-farm"><b>유기농 명인 지정</b><span>공고번호 2026-1210</span></div>
     <dl>
       <div><dt>모집 기간</dt><dd>2026. 9. 2.(수)까지</dd></div>
     </dl>
-    <a class="bnf-btn" href="https://www.jeonnam-gwangju.go.kr/contentsView.do?pageId=jngj24" target="_blank" rel="noopener">공고문 확인하기</a>
+    <a class="bnf-btn is-sub" href="https://www.jeonnam-gwangju.go.kr/contentsView.do?pageId=jngj24" target="_blank" rel="noopener">공고문 확인하기<span>공고번호 2026-1210</span></a>
   </article>
 
   <!-- 9 -->
