@@ -150,8 +150,9 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 
 /* 스크롤로 보일 때 재생 (JS가 is-anim → is-play) */
 .contents_div .fol26-stage.is-anim:not(.is-play) .fol26-l:not(.fol26-l-bg){ opacity:0; }
+.contents_div .fol26-stage.is-anim:not(.is-play) .fol26-l-bg{ transform:scale(1.12); }   /* 시작 프레임 — 첫 화면부터 이 상태 */
 .contents_div .fol26-stage.is-gpu .fol26-l{ will-change:transform, opacity; }
-.contents_div .fol26-stage.is-play .fol26-l-bg{ animation:fol26-drift 14s ease-in-out infinite alternate; }   /* 배경은 크기 점프 없이 원래 크기에서 아주 천천히 확대 */
+.contents_div .fol26-stage.is-play .fol26-l-bg{ animation:fol26-kb 2.6s cubic-bezier(.2,.7,.2,1) both, fol26-drift 16s 2.6s ease-in-out infinite alternate; }
 .contents_div .fol26-stage.is-play .fol26-l-sharp{ animation:fol26-in-fall 1.8s .3s cubic-bezier(.2,.7,.2,1) both, fol26-sway 3.2s 2.1s ease-in-out infinite alternate; }
 .contents_div .fol26-stage.is-play .fol26-l-blur{ animation:fol26-in-near 2s .1s cubic-bezier(.2,.7,.2,1) both, fol26-float 8s 2.1s ease-in-out infinite alternate; }
 .contents_div .fol26-stage.is-play .fol26-t-pin{ animation:fol26-drop .7s .6s cubic-bezier(.2,.7,.2,1) both; }
@@ -161,6 +162,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .fol26-stage.is-play .fol26-t-grid{ animation:fol26-rise 1s 1.45s cubic-bezier(.2,.7,.2,1) both; }
 .contents_div .fol26-stage.is-play .fol26-t-autumn{ animation:fol26-fade 1.2s 2s ease-out both; }
 
+@keyframes fol26-kb{ from{ transform:scale(1.12); } to{ transform:scale(1); } }
 @keyframes fol26-drift{ from{ transform:scale(1); } to{ transform:scale(1.04) translate(-.6%, -.4%); } }
 @keyframes fol26-in-fall{ from{ opacity:0; transform:translate(1.5%, -8%) rotate(-4deg) scale(1.12); } to{ opacity:1; transform:scale(1.12); } }
 @keyframes fol26-sway{ from{ transform:scale(1.12); } to{ transform:translate(-1.6%, 2.6%) rotate(2.4deg) scale(1.12); } }
@@ -605,6 +607,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <img class="fol26-l fol26-l-sharp" width="1600" height="1120" alt="" fetchpriority="high" loading="eager" decoding="async"
         src="img/히어로배경3.webp">
     </figure>
+    <script>(function(){var f=document.currentScript&&document.currentScript.previousElementSibling;if(f&&!(window.matchMedia&&matchMedia('(prefers-reduced-motion: reduce)').matches)){f.classList.add('is-anim');}})();</script>
     <div class="fol26-band">
       <p class="fol26-lead">전남광주통합특별시의 가을이 아름답게 물들어가고 있습니다.<span class="fol26-br fol26-br--web"></span> 짧지만 강렬한 아름다움을 선사하고 훌쩍 떠나는 이 계절,<span class="fol26-br fol26-br--web"></span> 가장 예쁜 남도의 가을을 만날 수 있는 전남광주의 단풍 명소를 소개할게요.</p>
       <span class="fol26-toc-lb" aria-hidden="true">CONTENTS</span>
