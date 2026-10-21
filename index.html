@@ -139,7 +139,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 }
 .contents_div .fol26-stage .fol26-l{ position:absolute; inset:0; width:100%; height:100%; display:block; }
 .contents_div .fol26-stage img.fol26-l{ object-fit:cover; max-width:none; image-rendering:auto; backface-visibility:hidden; }
-.contents_div .fol26-l-sharp{ transform:scale(1.12); transform-origin:50% 50%; }   /* 위쪽 잘린 잎 가장자리가 안 보이게 확대 */
+.contents_div .fol26-l-sharp{ transform:scale(1.12); transform-origin:0% 100%; }   /* 왼쪽·아래 고정, 위·오른쪽으로만 확대 — 왼쪽 잎이 잘리지 않고 위쪽 잎 가장자리는 가려짐 */
 .contents_div .fol26-l-blur{ transform:scale(1.05); transform-origin:50% 50%; }   /* 오른쪽 잘린 잎 가장자리가 안 보이게 살짝 확대 */
 .contents_div .fol26-t-pin{ clip-path:inset(14.464% 0.000% 79.911% 0.000%); }
 .contents_div .fol26-t-banner{ clip-path:inset(22.232% 24.562% 68.482% 24.875%); }
@@ -347,6 +347,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   width:158.4px; height:100.8px; background-size:369.9px 134.1px; background-position:-194.85px -16.65px;
 }
 
+/* 낙엽 둥둥 — transform과 겹치지 않게 translate 개별 속성으로 */
+.contents_div .fol26-s2 .fol26-deco-m--leaves{ animation:fol26-bob 1.8s ease-in-out infinite alternate; }
+@keyframes fol26-bob{ from{ translate:0 0; } to{ translate:0 -7px; } }
+
 /* ===== 2. 실시간 현황 — 짙은 지면 ===== */
 .contents_div .fol26-s2{ background:var(--bg-s2); color:var(--c-ivory); --rule-strong:rgba(251,243,228,.9); --rule:rgba(251,243,228,.28); }
 .contents_div .fol26-s2 .fol26-h2,
@@ -436,6 +440,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 @media (prefers-reduced-motion:reduce){
   .contents_div .fol26-stage .fol26-l{ animation:none !important; opacity:1 !important; }
   .contents_div .fol26-slide-track{ transition:none; }
+  .contents_div .fol26-s2 .fol26-deco-m--leaves{ animation:none; }
   .contents_div .fol26-wrap.is-rv .fol26-rv{ opacity:1; transform:none; transition:none; }
 }
 
