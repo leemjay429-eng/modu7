@@ -1056,6 +1056,16 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     });
   }, { rootMargin:'0px 0px -30% 0px' });   /* 뷰포트 30% 진입 시 등장 */
   rvs.forEach(function(el){ ro.observe(el); });
+  /* 페이지 끝 — 마지막 요소는 30% 지점까지 못 올라오므로, 푸터가 보이면 남은 요소를 모두 등장 */
+  var foot = wrap.querySelector('.fol26-foot');
+  if(foot){
+    var fo = new IntersectionObserver(function(entries){
+      if(!entries[0].isIntersecting) return;
+      rvs.forEach(function(el){ if(!el.classList.contains('is-in')){ el.classList.add('is-in'); ro.unobserve(el); } });
+      fo.disconnect();
+    }, { threshold:0 });
+    fo.observe(foot);
+  }
 })();
 </script>
 </div>
