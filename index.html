@@ -150,7 +150,8 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 
 /* 스크롤로 보일 때 재생 (JS가 is-anim → is-play) */
 .contents_div .fol26-stage.is-anim:not(.is-play) .fol26-l:not(.fol26-l-bg){ opacity:0; }
-.contents_div .fol26-stage.is-play .fol26-l-bg{ animation:fol26-kb 2.6s cubic-bezier(.2,.7,.2,1) both, fol26-drift 16s 2.6s ease-in-out infinite alternate; }
+.contents_div .fol26-stage.is-gpu .fol26-l{ will-change:transform, opacity; }
+.contents_div .fol26-stage.is-play .fol26-l-bg{ animation:fol26-drift 14s ease-in-out infinite alternate; }   /* 배경은 크기 점프 없이 원래 크기에서 아주 천천히 확대 */
 .contents_div .fol26-stage.is-play .fol26-l-sharp{ animation:fol26-in-fall 1.8s .3s cubic-bezier(.2,.7,.2,1) both, fol26-sway 3.2s 2.1s ease-in-out infinite alternate; }
 .contents_div .fol26-stage.is-play .fol26-l-blur{ animation:fol26-in-near 2s .1s cubic-bezier(.2,.7,.2,1) both, fol26-float 8s 2.1s ease-in-out infinite alternate; }
 .contents_div .fol26-stage.is-play .fol26-t-pin{ animation:fol26-drop .7s .6s cubic-bezier(.2,.7,.2,1) both; }
@@ -160,7 +161,6 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .fol26-stage.is-play .fol26-t-grid{ animation:fol26-rise 1s 1.45s cubic-bezier(.2,.7,.2,1) both; }
 .contents_div .fol26-stage.is-play .fol26-t-autumn{ animation:fol26-fade 1.2s 2s ease-out both; }
 
-@keyframes fol26-kb{ from{ transform:scale(1.12); } to{ transform:scale(1); } }
 @keyframes fol26-drift{ from{ transform:scale(1); } to{ transform:scale(1.04) translate(-.6%, -.4%); } }
 @keyframes fol26-in-fall{ from{ opacity:0; transform:translate(1.5%, -8%) rotate(-4deg) scale(1.12); } to{ opacity:1; transform:scale(1.12); } }
 @keyframes fol26-sway{ from{ transform:scale(1.12); } to{ transform:translate(-1.6%, 2.6%) rotate(2.4deg) scale(1.12); } }
@@ -583,9 +583,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 
   <!-- 히어로 -->
   <section class="fol26-hero" aria-labelledby="fol26-title">
+    <link rel="preload" as="image" href="img/히어로배경1.webp" fetchpriority="high">
     <h1 class="fol26-sr" id="fol26-title">가장 예쁜 남도의 가을, 실패 없는 전남광주통합특별시 단풍 코스</h1>
     <figure class="fol26-hero-fig fol26-stage" role="img" aria-label="전남광주 실패 없는 단풍 여행 가이드 남도 가을 — 주황빛으로 물든 메타세쿼이아 가로수길">
-      <img class="fol26-l fol26-l-bg" width="1600" height="1120" alt="" fetchpriority="high" loading="eager" decoding="async"
+      <img class="fol26-l fol26-l-bg" width="1600" height="1120" alt="" fetchpriority="high" loading="eager" decoding="sync"
         src="img/히어로배경1.webp">
       <img class="fol26-l fol26-l-blur" width="1600" height="1120" alt="" fetchpriority="high" loading="eager" decoding="async"
         src="img/히어로배경2.webp">
@@ -1001,12 +1002,23 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if(!reduce){
       stage.classList.add('is-anim');
+      var bgImg = stage.querySelector('.fol26-l-bg');
+      var ready = (bgImg && bgImg.decode) ? bgImg.decode().catch(function(){}) : Promise.resolve();
+      var playHero = function(){
+        ready.then(function(){
+          stage.classList.add('is-gpu');                       /* 재생 직전에만 GPU 레이어 */
+          requestAnimationFrame(function(){ requestAnimationFrame(function(){
+            stage.classList.add('is-play');
+            setTimeout(function(){ stage.classList.remove('is-gpu'); }, 3500);   /* 등장 끝나면 해제 */
+          }); });
+        });
+      };
       if('IntersectionObserver' in window){
         var ho = new IntersectionObserver(function(es){
-          es.forEach(function(e){ if(e.isIntersecting){ stage.classList.add('is-play'); ho.disconnect(); } });
+          es.forEach(function(e){ if(e.isIntersecting){ ho.disconnect(); playHero(); } });
         }, { rootMargin:'0px 0px -30% 0px', threshold:0 });   /* 뷰포트 30% 진입 시 재생 */
         ho.observe(stage);
-      } else { stage.classList.add('is-play'); }
+      } else { playHero(); }
     }
   }
 
