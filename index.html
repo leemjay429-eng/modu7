@@ -150,7 +150,7 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 }
 .contents_div #nr26-sec3 .nr26-kicker::after,
 .contents_div #nr26-sec4 .nr26-kicker::after{ left:calc(100% + 1px - var(--kick-deco-r) - var(--kick) * 3 / 32); }
-.contents_div #nr26-sec3{ background:#f7d47d; }
+.contents_div #nr26-sec3{ background:#f0d082; }
 /* 10대 브랜드 쌀 — 위·아래 격자, 가운데로 갈수록 사라짐 */
 .contents_div #nr26-sec3{ position:relative; isolation:isolate; }
 .contents_div #nr26-sec3::before,
@@ -305,6 +305,10 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   border-radius:50%;
   background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path d='M9.5 6l6 6-6 6' fill='none' stroke='%23c8962e' stroke-width='2.6' stroke-linecap='round' stroke-linejoin='round'/></svg>") center / 22px 22px no-repeat var(--c-bg1);
 }
+/* 화살표 동그라미가 다음 칸 위로 오도록 앞 칸이 더 위 */
+.contents_div .nr26-flow-item:nth-child(1){ z-index:3; }
+.contents_div .nr26-flow-item:nth-child(2){ z-index:2; }
+.contents_div .nr26-flow-item:nth-child(3){ z-index:1; }
 .contents_div .nr26-flow-head{ display:flex; align-items:center; justify-content:center; gap:8px; }
 /* 선정 기준 카드 — 다크 */
 .contents_div .nr26-flow-item .nr26-h3{ color:var(--c-bg1); }
@@ -673,10 +677,6 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 <article class="nr26-wrap">
 
   <!-- 히어로 -->
-<!-- TEST: 확인 후 이 줄 삭제 -->
-<div class="jngj-test-spacer" aria-hidden="true" style="height:900px;max-width:800px;margin:auto;display:grid;place-items:center;border:1px solid #cb9;background:linear-gradient(to top right,#0000 calc(50% - 1px),#cb9,#0000 calc(50% + 1px)),linear-gradient(to top left,#0000 calc(50% - 1px),#cb9,#0000 calc(50% + 1px)) #fffdef;font:700 16px sans-serif;color:#7E5E50"><b style="padding:10px 20px;background:#fffdef;border:1px solid #cb9;border-radius:99px">
-  테스트 영역 · 아래로 스크롤 ↓</b></div>
-<!-- TEST: 확인 후 이 줄 삭제  -->
   <div class="nr26-hero">
     <div class="nr26-fig nr26-hero-stage">
       <img class="nr26-hl nr26-hl--bg"
