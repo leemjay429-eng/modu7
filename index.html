@@ -473,22 +473,30 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .nr26-hero-stage .nr26-hl{ pointer-events:none; }
 /* 배경 이미지 도착 전 회색 대신 하늘색 → 버벅임 완화 */
 .contents_div .nr26-hero-stage{ background:linear-gradient(#bfdcf0, #d9ebf5 55%, #e6dca4); }
-.contents_div .nr26-hl--sprig{ clip-path:inset(38% 77% 13.8% 0); transform-origin:4.1% 85%; }
-.contents_div .nr26-hl--leaf1{ clip-path:inset(6% 83.6% 87.8% 10.8%); transform-origin:13.5% 9.1%; }
-.contents_div .nr26-hl--leaf2{ clip-path:inset(12.3% 8.8% 80.9% 85.9%); transform-origin:88.6% 15.7%; }
-.contents_div .nr26-hl--sub{ clip-path:inset(10.6% 24% 85.6% 23.8%); }
-.contents_div .nr26-hl--t1{ clip-path:inset(20.6% 10.6% 65.6% 11.8%); }
-.contents_div .nr26-hl--t2{ clip-path:inset(35.9% 58% 50.4% 17%); }
-.contents_div .nr26-hl--key{ clip-path:inset(35.9% 15.8% 50.4% 42%); transform-origin:63% 43%; backface-visibility:hidden; }
+/* 잘라 보일 영역만 작은 상자(overflow:hidden)로 — 원본 이미지는 자르지 않고 상자 안에서 위치만 이동
+   → 움직이는 레이어가 작아져 GPU 부담·버벅임 감소 (--x,--y,--w,--h: 원본 1600 기준 좌표) */
+.contents_div .nr26-hero-stage .nr26-hc{
+  position:absolute; overflow:hidden; pointer-events:none;
+  left:calc(var(--x) / 1600 * 100%); top:calc(var(--y) / 1600 * 100%);
+  width:calc(var(--w) / 1600 * 100%); height:calc(var(--h) / 1600 * 100%);
+  backface-visibility:hidden;
+}
+.contents_div .nr26-hero-stage .nr26-hc img{
+  position:absolute; inset:auto; max-width:none; object-fit:fill;
+  width:calc(1600 / var(--w) * 100%); height:calc(1600 / var(--h) * 100%);
+  left:calc(var(--x) / var(--w) * -100%); top:calc(var(--y) / var(--h) * -100%);
+}
+.contents_div .nr26-hl--sprig{ transform-origin:17.8% 97.5%; }
+.contents_div .nr26-hl--key{ transform-origin:50% 52%; }
 /* 남도쌀 확대: 진입 후에만 GPU 레이어 승격 (상시 will-change 금지) */
 .contents_div .nr26-js .is-in .nr26-hl--key{ will-change:transform, opacity; }
-.contents_div .nr26-hl--credit{ clip-path:inset(91.6% 11% 5% 11.2%); }
 
 /* 반복 모션: 일러 흔들흔들 · 잎 둥실 · 배경 흐름 — 히어로가 뷰포트에 30% 들어온 뒤 시작 */
 .contents_div .nr26-js .is-in .nr26-hl--sprig{ animation:nr26-sway 2.6s ease-in-out infinite alternate; }
 .contents_div .nr26-js .is-in .nr26-hl--leaf1{ animation:nr26-leaf1 3.2s ease-in-out infinite alternate; }
 .contents_div .nr26-js .is-in .nr26-hl--leaf2{ animation:nr26-leaf2 3.8s ease-in-out infinite alternate; }
-.contents_div .nr26-hl--bg{ transform-origin:50% 50%; }
+/* 배경은 처음부터 표시 · 모션 시작 위치와 같은 상태로 두어 시작할 때 튀지 않게 */
+.contents_div .nr26-hl--bg{ transform-origin:50% 50%; transform:scale(1.05) translateX(-1.8%); opacity:1; }
 .contents_div .nr26-js .is-in .nr26-hl--bg{ animation:nr26-breath 9s ease-in-out infinite alternate; }
 
 /* 진입 모션: 히어로가 뷰포트에 30% 들어올 때 (JS가 있을 때만 숨김 → 실패해도 글자는 보임) */
@@ -503,17 +511,18 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 .contents_div .nr26-js .is-in .nr26-hl--key{ animation:nr26-pop .8s 1.15s cubic-bezier(.22,.61,.36,1) both, nr26-beat 3.6s 2.2s ease-in-out infinite; }
 .contents_div .nr26-js .is-in .nr26-hl--credit{ animation:nr26-fade 1s 1.7s ease both; }
 
-@keyframes nr26-sway{ 0%{ transform:rotate(-6deg); } 55%{ transform:rotate(5deg); } 100%{ transform:rotate(7deg); } }
-@keyframes nr26-leaf1{ 0%{ transform:translate(0,0) rotate(-18deg); } 50%{ transform:translate(1.4%,1.6%) rotate(8deg); } 100%{ transform:translate(2.4%,3%) rotate(22deg); } }
-@keyframes nr26-leaf2{ 0%{ transform:translate(0,0) rotate(14deg); } 50%{ transform:translate(-1.4%,1.8%) rotate(-6deg); } 100%{ transform:translate(-2.6%,3.2%) rotate(-20deg); } }
+@keyframes nr26-sway{ 0%{ transform:rotate(-6deg) translateZ(0); } 55%{ transform:rotate(5deg) translateZ(0); } 100%{ transform:rotate(7deg) translateZ(0); } }
+@keyframes nr26-leaf1{ 0%{ transform:translate3d(0,0,0) rotate(-18deg); } 50%{ transform:translate3d(1.4cqi,1.6cqi,0) rotate(8deg); } 100%{ transform:translate3d(2.4cqi,3cqi,0) rotate(22deg); } }
+@keyframes nr26-leaf2{ 0%{ transform:translate3d(0,0,0) rotate(14deg); } 50%{ transform:translate3d(-1.4cqi,1.8cqi,0) rotate(-6deg); } 100%{ transform:translate3d(-2.6cqi,3.2cqi,0) rotate(-20deg); } }
 @keyframes nr26-breath{ from{ transform:scale(1.05) translateX(-1.8%); } to{ transform:scale(1.11) translateX(1.8%); } }
-@keyframes nr26-rise{ from{ opacity:0; transform:translate3d(0,3%,0); } to{ opacity:1; transform:translate3d(0,0,0); } }
+@keyframes nr26-rise{ from{ opacity:0; transform:translate3d(0,3cqi,0); } to{ opacity:1; transform:translate3d(0,0,0); } }
 @keyframes nr26-pop{ 0%{ opacity:0; transform:scale3d(.6,.6,1); } 65%{ opacity:1; transform:scale3d(1.08,1.08,1); } 100%{ opacity:1; transform:scale3d(1,1,1); } }
 @keyframes nr26-beat{ 0%,18%,100%{ transform:scale3d(1,1,1); } 8%{ transform:scale3d(1.045,1.045,1); } }
 @keyframes nr26-fade{ from{ opacity:0; } to{ opacity:1; } }
 
 @media (prefers-reduced-motion:reduce){
-  .contents_div .nr26-hero-stage .nr26-hl{ animation:none !important; opacity:1 !important; }
+  .contents_div .nr26-hero-stage .nr26-hl,
+  .contents_div .nr26-hero-stage .nr26-hc{ animation:none !important; opacity:1 !important; }
 }
 
 /* ===== 스크롤 등장 (내비 아래 섹션) — JS 있을 때만 숨김 ===== */
@@ -696,30 +705,30 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
       <img class="nr26-hl nr26-hl--bg"
         src="img/히어로배경.webp"
         alt="남도의 풍요로움을 한 그릇에, 밥맛이 다르다 역시 남도쌀! 전남광주통합특별시 — 파란 하늘 아래 누렇게 익은 벼 이삭" width="1600" height="1600" fetchpriority="high" loading="eager" decoding="auto">
-      <img class="nr26-hl nr26-hl--sprig" aria-hidden="true" alt=""
+      <span class="nr26-hc nr26-hl--sprig" aria-hidden="true" style="--x:0;--y:608;--w:368;--h:771"><img
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--leaf1" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--leaf1" aria-hidden="true" style="--x:172.8;--y:96;--w:89.6;--h:99.2"><img
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--leaf2" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--leaf2" aria-hidden="true" style="--x:1374.4;--y:196.8;--w:84.8;--h:108.8"><img
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--sub" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--sub" aria-hidden="true" style="--x:380.8;--y:169.6;--w:835.2;--h:60.8"><img
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--t1" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--t1" aria-hidden="true" style="--x:188.8;--y:329.6;--w:1241.6;--h:220.8"><img
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--t2" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--t2" aria-hidden="true" style="--x:272;--y:574.4;--w:400;--h:219.2"><img
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--key" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--key" aria-hidden="true" style="--x:672;--y:574.4;--w:675.2;--h:219.2"><img
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
-      <img class="nr26-hl nr26-hl--credit" aria-hidden="true" alt=""
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
+      <span class="nr26-hc nr26-hl--credit" aria-hidden="true" style="--x:179.2;--y:1465.6;--w:1244.8;--h:54.4"><img
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
+        alt="" width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async"></span>
     </div>
   </div>
 
