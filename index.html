@@ -471,6 +471,8 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
 
 /* ===== 히어로 레이어 모션 (원본 1600×1600 캔버스 그대로 겹치고 clip-path로 영역 분리) ===== */
 .contents_div .nr26-hero-stage .nr26-hl{ pointer-events:none; }
+/* 배경 이미지 도착 전 회색 대신 하늘색 → 버벅임 완화 */
+.contents_div .nr26-hero-stage{ background:linear-gradient(#bfdcf0, #d9ebf5 55%, #e6dca4); }
 .contents_div .nr26-hl--sprig{ clip-path:inset(38% 77% 13.8% 0); transform-origin:4.1% 85%; }
 .contents_div .nr26-hl--leaf1{ clip-path:inset(6% 83.6% 87.8% 10.8%); transform-origin:13.5% 9.1%; }
 .contents_div .nr26-hl--leaf2{ clip-path:inset(12.3% 8.8% 80.9% 85.9%); transform-origin:88.6% 15.7%; }
@@ -693,31 +695,31 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
     <div class="nr26-fig nr26-hero-stage">
       <img class="nr26-hl nr26-hl--bg"
         src="img/히어로배경.webp"
-        alt="남도의 풍요로움을 한 그릇에, 밥맛이 다르다 역시 남도쌀! 전남광주통합특별시 — 파란 하늘 아래 누렇게 익은 벼 이삭" width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        alt="남도의 풍요로움을 한 그릇에, 밥맛이 다르다 역시 남도쌀! 전남광주통합특별시 — 파란 하늘 아래 누렇게 익은 벼 이삭" width="1600" height="1600" fetchpriority="high" loading="eager" decoding="auto">
       <img class="nr26-hl nr26-hl--sprig" aria-hidden="true" alt=""
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--leaf1" aria-hidden="true" alt=""
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--leaf2" aria-hidden="true" alt=""
         src="img/히어로%20일러.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--sub" aria-hidden="true" alt=""
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--t1" aria-hidden="true" alt=""
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--t2" aria-hidden="true" alt=""
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--key" aria-hidden="true" alt=""
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
       <img class="nr26-hl nr26-hl--credit" aria-hidden="true" alt=""
         src="img/히어로텍스트.webp"
-        width="1600" height="1600" fetchpriority="high" loading="eager" decoding="async">
+        width="1600" height="1600" fetchpriority="low" loading="eager" decoding="async">
     </div>
   </div>
 
