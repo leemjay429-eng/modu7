@@ -643,6 +643,18 @@ if(location.protocol==='file:'||location.hostname.indexOf('github.io')>-1){
   .contents_div .nr26-tip{ padding:calc(var(--card-py) + 8px) var(--card-px); }
   .contents_div .nr26-tip::before,
   .contents_div .nr26-tip::after{ top:calc(var(--card-py) + 8px + var(--fs-h3) * .62); }
+  /* 모바일: + 마크를 제목 캡슐 좌우에 붙여 배치 */
+  .contents_div .nr26-tip::before,
+  .contents_div .nr26-tip::after{ display:none; }
+  .contents_div .nr26-tip .nr26-h3{ position:relative; }
+  .contents_div .nr26-tip .nr26-h3::before,
+  .contents_div .nr26-tip .nr26-h3::after{
+    content:''; position:absolute; top:50%;
+    width:var(--tip-mk); height:var(--tip-mk); margin-top:calc(var(--tip-mk) / -2);
+    background:url("data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'><g fill='none' stroke='%23f0d595' stroke-width='1' stroke-linecap='round' vector-effect='non-scaling-stroke'><circle cx='10' cy='10' r='9' vector-effect='non-scaling-stroke'/><path d='M10 5.6v8.8M5.6 10h8.8' vector-effect='non-scaling-stroke'/></g></svg>") center / contain no-repeat;
+  }
+  .contents_div .nr26-tip .nr26-h3::before{ right:calc(100% + 12px); }
+  .contents_div .nr26-tip .nr26-h3::after{ left:calc(100% + 12px); }
   .contents_div .nr26-pick-item:last-child{ padding-bottom:0; }
   .contents_div .nr26-def{ padding:12px 14px; }
   .contents_div .nr26-foot-title{ line-height:1.42; font-weight:500; }
